@@ -1,2 +1,4 @@
 # BillingApp
-Billing App for SME's In India
+ Simple efficient fully GST Compliant Billing APP  for Indian SME's
+
+ 
