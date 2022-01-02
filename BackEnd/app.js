@@ -1,4 +1,7 @@
-const express = require("express");
+import express from "express";
+import db from "./models/connect.js";
+
+db();
 
 const app = express();
 
