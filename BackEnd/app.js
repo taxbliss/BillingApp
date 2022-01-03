@@ -1,16 +1,34 @@
 import express from "express";
-import db from "./models/connect.js";
-
-db();
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 
-const PORT = process.env.PORT || 3000;
+app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Hello welcome to Taxbliss App");
+const URI = process.env.MONGO_URI;
+mongoose.connect(URI);
+
+const InvSchema = mongoose.Schema({
+  InvNo: String,
+  InvDate: String,
+  CustomerName: String,
+  InvValue: Number,
 });
 
-app.listen(PORT, () => {
-  console.log(`server running on  port ${PORT}`);
+const InvModel = mongoose.model("InvModel", InvSchema);
+
+app.post("/Inv", async (req, res) => {
+  const Inv = new InvModel(req.body);
+  try {
+    await Inv.save();
+    res.send(Inv);
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+app.listen(3500, () => {
+  console.log("App runnung on port 3500");
 });
